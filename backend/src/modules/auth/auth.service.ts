@@ -14,7 +14,7 @@ export class AuthService {
 
   async weappLogin(code: string) {
     // TODO: 调用微信 API 获取 openid 和 unionid
-    // 临时返回模拟数据
+    // 开发环境使用模拟数据
     const mockUnionid = `weapp_unionid_${code}`;
     const mockOpenid = `weapp_openid_${code}`;
 
@@ -31,6 +31,13 @@ export class AuthService {
       await this.userRepository.save(user);
     }
 
+    return this.generateUserResponse(user);
+  }
+
+  /**
+   * 生成用户响应对象
+   */
+  private generateUserResponse(user: User) {
     const payload = { user_id: user.user_id };
     const access_token = this.jwtService.sign(payload);
 
@@ -63,18 +70,7 @@ export class AuthService {
       await this.userRepository.save(user);
     }
 
-    const payload = { user_id: user.user_id };
-    const access_token = this.jwtService.sign(payload);
-
-    return {
-      access_token,
-      user: {
-        user_id: user.user_id,
-        nickname: user.nickname,
-        avatar_url: user.avatar_url,
-        vip_expire_at: user.vip_expire_at,
-      },
-    };
+    return this.generateUserResponse(user);
   }
 
   async sendPhoneCode(phone: string) {
@@ -88,9 +84,10 @@ export class AuthService {
   }
 
   async phoneLogin(phone: string, code: string) {
-    // TODO: 验证验证码
-    if (code !== '123456') {
-      throw new UnauthorizedException('验证码错误');
+    // TODO: 验证验证码（从Redis读取）
+    const isValidCode = await this.verifyPhoneCode(phone, code);
+    if (!isValidCode) {
+      throw new UnauthorizedException('验证码错误或已过期');
     }
 
     let user = await this.userRepository.findOne({ where: { phone } });
@@ -103,18 +100,16 @@ export class AuthService {
       await this.userRepository.save(user);
     }
 
-    const payload = { user_id: user.user_id };
-    const access_token = this.jwtService.sign(payload);
+    return this.generateUserResponse(user);
+  }
 
-    return {
-      access_token,
-      user: {
-        user_id: user.user_id,
-        nickname: user.nickname,
-        avatar_url: user.avatar_url,
-        vip_expire_at: user.vip_expire_at,
-      },
-    };
+  /**
+   * 验证手机验证码
+   */
+  private async verifyPhoneCode(phone: string, code: string): Promise<boolean> {
+    // TODO: 从 Redis 读取验证码进行验证
+    // 开发环境固定为 123456
+    return code === '123456';
   }
 
   async refreshToken(refreshToken: string) {
