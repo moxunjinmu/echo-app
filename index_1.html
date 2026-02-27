@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MOMO回声同款产品 - MVP补充页面 (登录/支付/复习/反馈)</title>
+<style>
+    :root {
+        --primary: #00D084;
+        --primary-dark: #00A368;
+        --bg-color: #F7F8FA;
+        --text-main: #333333;
+        --text-sub: #888888;
+        --white: #FFFFFF;
+        --red: #FF4D4F;
+        --border: #EEEEEE;
+        --gold: #F7B500;
+        --gold-light: #FFF8E1;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #EAECEF; padding: 40px; }
+    
+    .header-title { text-align: center; margin-bottom: 40px; color: #333; }
+    .header-title h1 { font-size: 28px; margin-bottom: 10px; }
+    .header-title p { color: #666; font-size: 16px; }
+
+    /* 平铺容器 */
+    .container { display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; }
+
+    /* 手机模型壳 */
+    .phone {
+        width: 375px; height: 812px; background: var(--white);
+        border-radius: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        overflow: hidden; position: relative; border: 8px solid #333;
+        display: flex; flex-direction: column;
+    }
+    
+    /* 刘海与状态栏 */
+    .notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 150px; height: 25px; background: #333; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; z-index: 100;}
+    .status-bar { height: 44px; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; font-size: 14px; font-weight: 600; color: #000; z-index: 90; position: relative;}
+    .status-bar.dark { color: #fff; }
+
+    /* 通用内容区 */
+    .content { flex: 1; overflow-y: auto; background: var(--bg-color); position: relative; }
+    .content::-webkit-scrollbar { display: none; }
+    
+    .nav-header { height: 44px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; background: var(--white); font-size: 16px; font-weight: bold;}
+    .nav-header .back { font-size: 20px; cursor: pointer; }
+
+    .btn-primary { background: var(--primary); color: white; border: none; width: 100%; padding: 16px; border-radius: 100px; font-size: 16px; font-weight: bold; cursor: pointer; text-align: center; box-shadow: 0 8px 20px rgba(0,208,132,0.3);}
+
+    /* === 补充界面 1：登录与入职引导页 (Onboarding) === */
+    .onboarding-wrap { background: var(--white); height: 100%; padding: 40px 20px 30px; display: flex; flex-direction: column; }
+    .step-indicator { display: flex; justify-content: center; gap: 8px; margin-bottom: 40px; margin-top: 20px; }
+    .step-dot { width: 8px; height: 8px; border-radius: 50%; background: #E0E0E0; }
+    .step-dot.active { background: var(--primary); width: 24px; border-radius: 4px; }
+    
+    .ob-title { font-size: 26px; font-weight: bold; color: var(--text-main); margin-bottom: 10px; text-align: center; }
+    .ob-desc { font-size: 15px; color: var(--text-sub); text-align: center; margin-bottom: 40px; line-height: 1.5; }
+    
+    .target-options { display: flex; flex-direction: column; gap: 15px; flex: 1;}
+    .option-btn { border: 2px solid var(--border); padding: 20px; border-radius: 16px; font-size: 16px; font-weight: bold; color: var(--text-main); display: flex; justify-content: space-between; align-items: center; transition: 0.2s;}
+    .option-btn.selected { border-color: var(--primary); background: #E8F8F2; color: var(--primary-dark); }
+    .option-btn .icon { font-size: 24px; }
+    
+    .login-footer { margin-top: auto; text-align: center; font-size: 12px; color: var(--text-sub); }
+    .login-footer span { color: var(--primary); }
+
+    /* === 补充界面 2：VIP 支付与转化页 (Paywall) === */
+    .paywall-header { background: linear-gradient(180deg, #2A2D34 0%, #1A1C20 100%); padding: 30px 20px 40px; color: white; border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; position: relative;}
+    .vip-icon { font-size: 40px; text-align: center; margin-bottom: 10px; }
+    .paywall-title { font-size: 24px; font-weight: bold; text-align: center; margin-bottom: 8px; color: var(--gold); }
+    .paywall-subtitle { font-size: 14px; text-align: center; color: #AAA; }
+    
+    .privilege-box { background: var(--white); border-radius: 20px; margin: -20px 20px 20px; padding: 25px 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); position: relative; z-index: 2;}
+    .privilege-list { display: flex; flex-direction: column; gap: 18px; }
+    .privilege-item { display: flex; align-items: flex-start; gap: 15px; }
+    .privilege-icon { width: 32px; height: 32px; border-radius: 50%; background: var(--gold-light); color: var(--gold); display: flex; justify-content: center; align-items: center; font-size: 16px; flex-shrink: 0;}
+    .privilege-text h4 { font-size: 15px; color: var(--text-main); margin-bottom: 4px; }
+    .privilege-text p { font-size: 12px; color: var(--text-sub); line-height: 1.4; }
+
+    .price-cards { padding: 0 20px; display: flex; gap: 12px; margin-bottom: 30px;}
+    .price-card { flex: 1; border: 2px solid var(--border); border-radius: 16px; padding: 20px 10px; text-align: center; position: relative; background: var(--white);}
+    .price-card.recommend { border-color: var(--gold); background: #FFFDF8; }
+    .tag-recommend { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--gold); color: white; font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: bold; white-space: nowrap;}
+    .pc-duration { font-size: 14px; color: var(--text-main); font-weight: bold; margin-bottom: 10px;}
+    .pc-price { font-size: 24px; color: var(--gold); font-weight: bold; margin-bottom: 5px;}
+    .pc-price span { font-size: 14px; }
+    .pc-orig { font-size: 12px; color: var(--text-sub); text-decoration: line-through;}
+    
+    .pay-btn-wrap { padding: 0 20px 30px; }
+    .btn-gold { background: linear-gradient(90deg, #FAD961 0%, #F76B1C 100%); color: white; box-shadow: 0 8px 20px rgba(247,107,28,0.3); }
+
+    /* === 补充界面 3：复习与弱项错题本 (Review & Weakness) === */
+    .tabs-header { background: var(--white); display: flex; justify-content: space-around; border-bottom: 1px solid var(--border); }
+    .tab-item { padding: 15px 0; font-size: 16px; color: var(--text-sub); position: relative; }
+    .tab-item.active { color: var(--text-main); font-weight: bold; }
+    .tab-item.active::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 20px; height: 3px; background: var(--primary); border-radius: 2px; }
+    
+    .weakness-list { padding: 20px; }
+    .weak-card { background: var(--white); border-radius: 16px; padding: 18px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.02);}
+    .weak-source { font-size: 12px; color: var(--primary-dark); margin-bottom: 8px; display: flex; justify-content: space-between;}
+    .weak-source span.rate { background: #FFF0F0; color: var(--red); padding: 2px 6px; border-radius: 4px; }
+    .weak-sentence { font-size: 16px; font-weight: bold; color: var(--text-main); margin-bottom: 15px; line-height: 1.4;}
+    .weak-sentence span { color: var(--red); text-decoration: underline dashed; text-underline-offset: 4px;}
+    .weak-actions { display: flex; justify-content: flex-end; gap: 15px; }
+    .btn-sm { padding: 6px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; border: 1px solid var(--border); background: var(--white); color: var(--text-main); cursor: pointer;}
+    .btn-sm.play { border-color: var(--primary); color: var(--primary); }
+    
+    .float-btn { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); background: var(--text-main); color: white; padding: 14px 30px; border-radius: 30px; font-weight: bold; font-size: 15px; display: flex; align-items: center; gap: 8px; box-shadow: 0 10px 20px rgba(0,0,0,0.15);}
+
+    /* === 补充界面 4：通用意见反馈与报错页 (Feedback) === */
+    .form-container { padding: 20px; background: var(--white); height: calc(100% - 44px);}
+    .form-label { font-size: 14px; font-weight: bold; color: var(--text-main); margin-bottom: 10px; margin-top: 20px; display: block;}
+    
+    .tag-group { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;}
+    .fb-tag { padding: 8px 16px; background: var(--bg-color); border: 1px solid var(--border); border-radius: 20px; font-size: 13px; color: var(--text-sub);}
+    .fb-tag.active { background: #E8F8F2; border-color: var(--primary); color: var(--primary-dark); font-weight: bold;}
+    
+    .textarea-box { width: 100%; height: 150px; background: var(--bg-color); border: 1px solid var(--border); border-radius: 12px; padding: 15px; font-size: 14px; color: var(--text-main); resize: none; margin-bottom: 20px; outline: none;}
+    .textarea-box::placeholder { color: #BBB; }
+    
+    .upload-box { width: 80px; height: 80px; background: var(--bg-color); border: 1px dashed #CCC; border-radius: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #999; font-size: 12px; gap: 5px; margin-bottom: 40px;}
+    .upload-box span { font-size: 24px; }
+    
+</style>
+</head>
+<body>
+
+<div class="header-title">
+    <h1>MOMO回声（同款）MVP 1.0 补充页面设计</h1>
+    <p>包含：登录与目标设定、VIP支付墙、弱项错题本、意见报错反馈</p>
+</div>
+
+<div class="container">
+
+    <!-- Screen 1: 登录与入职引导页 (Onboarding) -->
+    <div class="phone">
+        <div class="notch"></div>
+        <div class="status-bar"><span>09:41</span><span>📶 🔋</span></div>
+        
+        <div class="content">
+            <div class="onboarding-wrap">
+                <div class="step-indicator">
+                    <div class="step-dot active"></div>
+                    <div class="step-dot"></div>
+                    <div class="step-dot"></div>
+                </div>
+                
+                <div class="ob-title">选择你的学习目标</div>
+                <div class="ob-desc">我们将为你推荐最适合的听力与口语素材<br>帮助你建立直觉反射</div>
+                
+                <div class="target-options">
+                    <div class="option-btn">
+                        <span>🏫 托福 / 雅思备考</span>
+                        <span style="color:#CCC;">○</span>
+                    </div>
+                    <div class="option-btn selected">
+                        <span>💼 职场外企实战</span>
+                        <span style="color:var(--primary);">✓</span>
+                    </div>
+                    <div class="option-btn">
+                        <span>🎓 四六级 / 考研英语</span>
+                        <span style="color:#CCC;">○</span>
+                    </div>
+                    <div class="option-btn">
+                        <span>☕ 日常生活与旅游</span>
+                        <span style="color:#CCC;">○</span>
+                    </div>
+                </div>
+
+                <button class="btn-primary" style="margin-top: 20px;">下一步</button>
+                <div class="login-footer">
+                    点击下一步即表示同意 <span>《用户协议》</span> 与 <span>《隐私政策》</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 2: VIP 支付与转化页 (Paywall) -->
+    <div class="phone">
+        <div class="notch"></div>
+        <!-- 沉浸式暗色状态栏 -->
+        <div class="status-bar dark" style="background:#2A2D34"><span>09:41</span><span>📶 🔋</span></div>
+        
+        <div class="content">
+            <div class="nav-header" style="background:#2A2D34; color:white; border:none;">
+                <span class="back">✕</span>
+                <span></span>
+                <span style="font-size:14px; font-weight:normal; color:#AAA;">恢复购买</span>
+            </div>
+            
+            <div class="paywall-header">
+                <div class="vip-icon">👑</div>
+                <div class="paywall-title">升级 PRO 会员</div>
+                <div class="paywall-subtitle">解锁所有真题库，无限次AI解析辅导</div>
+            </div>
+            
+            <div class="privilege-box">
+                <div class="privilege-list">
+                    <div class="privilege-item">
+                        <div class="privilege-icon">✨</div>
+                        <div class="privilege-text">
+                            <h4>无限次 AI 语境解析</h4>
+                            <p>突破每日5次限制，随时随地呼唤AI老师讲授发音连读与语境翻译。</p>
+                        </div>
+                    </div>
+                    <div class="privilege-item">
+                        <div class="privilege-icon">📚</div>
+                        <div class="privilege-text">
+                            <h4>解锁全站高阶/真题库</h4>
+                            <p>畅听 TPO、剑桥雅思等核心应试资料包。</p>
+                        </div>
+                    </div>
+                    <div class="privilege-item">
+                        <div class="privilege-icon">📊</div>
+                        <div class="privilege-text">
+                            <h4>专属弱项分析报告</h4>
+                            <p>每周生成口语发音弱点报告，针对性攻克易错词。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="price-cards">
+                <div class="price-card">
+                    <div class="pc-duration">连续包月</div>
+                    <div class="pc-price"><span>¥</span>28</div>
+                    <div class="pc-orig">¥38/月</div>
+                </div>
+                <div class="price-card recommend">
+                    <div class="tag-recommend">限时特惠</div>
+                    <div class="pc-duration">年度会员</div>
+                    <div class="pc-price"><span>¥</span>198</div>
+                    <div class="pc-orig">¥456/年</div>
+                    <div style="font-size:10px; color:var(--gold); margin-top:5px;">折合 ¥16.5/月</div>
+                </div>
+            </div>
+
+            <div class="pay-btn-wrap">
+                <button class="btn-primary btn-gold">立即开通 PRO</button>
+                <div style="text-align:center; font-size:11px; color:#999; margin-top:15px;">到期自动续费，可随时取消</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 3: 复习与弱项错题本 -->
+    <div class="phone">
+        <div class="notch"></div>
+        <div class="status-bar"><span>09:41</span><span>📶 🔋</span></div>
+        
+        <div class="nav-header">
+            <span class="back">←</span>
+            <span>弱项与复习</span>
+            <span style="font-size:14px; font-weight:normal;">编辑</span>
+        </div>
+
+        <div class="tabs-header">
+            <div class="tab-item active">听力错句 (12)</div>
+            <div class="tab-item">AI 生词本 (45)</div>
+        </div>
+
+        <div class="content">
+            <div class="weakness-list">
+                <!-- 错句卡片 1 -->
+                <div class="weak-card">
+                    <div class="weak-source">
+                        TPO 校园对话 · 第13句 <span class="rate">识别率 35%</span>
+                    </div>
+                    <div class="weak-sentence">
+                        But the door is <span>locked</span> and I couldn't <span>get in</span>.
+                    </div>
+                    <div class="weak-actions">
+                        <button class="btn-sm play">▶ 原音</button>
+                        <button class="btn-sm">看解析</button>
+                    </div>
+                </div>
+
+                <!-- 错句卡片 2 -->
+                <div class="weak-card">
+                    <div class="weak-source">
+                        外企会议实战 · 第5句 <span class="rate">识别率 50%</span>
+                    </div>
+                    <div class="weak-sentence">
+                        Let's <span>wrap up</span> this meeting before noon.
+                    </div>
+                    <div class="weak-actions">
+                        <button class="btn-sm play">▶ 原音</button>
+                        <button class="btn-sm">看解析</button>
+                    </div>
+                </div>
+                
+                 <!-- 错句卡片 3 -->
+                 <div class="weak-card" style="opacity: 0.7;">
+                    <div class="weak-source">
+                        日常口语50句 · 第8句 <span class="rate" style="background:#E8F8F2; color:var(--primary-dark)">已掌握</span>
+                    </div>
+                    <div class="weak-sentence" style="color:#888">
+                        I'll take a rain check on that.
+                    </div>
+                    <div class="weak-actions">
+                        <button class="btn-sm">移出错题本</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="float-btn">
+                <span>🔥</span> 打包攻克错题 (12)
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 4: 意见反馈与报错页 -->
+    <div class="phone">
+        <div class="notch"></div>
+        <div class="status-bar"><span>09:41</span><span>📶 🔋</span></div>
+        
+        <div class="nav-header">
+            <span class="back">←</span>
+            <span>意见反馈</span>
+            <span></span>
+        </div>
+
+        <div class="content">
+            <div class="form-container">
+                <span class="form-label">请选择反馈问题类型</span>
+                <div class="tag-group">
+                    <div class="fb-tag active">音频/字幕错误</div>
+                    <div class="fb-tag">语音识别不准</div>
+                    <div class="fb-tag">闪退/卡顿问题</div>
+                    <div class="fb-tag">功能建议</div>
+                    <div class="fb-tag">账号/充值问题</div>
+                </div>
+
+                <span class="form-label">补充详细描述 (选填)</span>
+                <textarea class="textarea-box" placeholder="请详细描述您遇到的问题，如果是字幕错误，请告知我们具体的课程名称和句子序号，我们将尽快修复。"></textarea>
+
+                <span class="form-label">上传截图 (选填，最多3张)</span>
+                <div class="upload-box">
+                    <span>+</span>
+                    添加图片
+                </div>
+
+                <button class="btn-primary">提交反馈</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MOMO回声同款产品 - UI界面设计平铺展示</title>
+<style>
+    :root {
+        --primary: #00D084;
+        --primary-dark: #00A368;
+        --bg-color: #F7F8FA;
+        --text-main: #333333;
+        --text-sub: #888888;
+        --white: #FFFFFF;
+        --red: #FF4D4F;
+        --border: #EEEEEE;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #EAECEF; padding: 40px; }
+    
+    .header-title { text-align: center; margin-bottom: 40px; color: #333; }
+    .header-title h1 { font-size: 28px; margin-bottom: 10px; }
+    .header-title p { color: #666; font-size: 16px; }
+
+    /* 平铺容器 */
+    .container { display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; }
+
+    /* 手机模型壳 */
+    .phone {
+        width: 375px; height: 812px; background: var(--white);
+        border-radius: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        overflow: hidden; position: relative; border: 8px solid #333;
+        display: flex; flex-direction: column;
+    }
+    
+    /* 刘海与状态栏 */
+    .notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 150px; height: 25px; background: #333; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; z-index: 100;}
+    .status-bar { height: 44px; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; font-size: 14px; font-weight: 600; color: #000; z-index: 90; position: relative;}
+    .status-bar.dark { color: #fff; }
+
+    /* 底部导航 */
+    .bottom-nav { height: 80px; background: rgba(255,255,255,0.95); border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; padding-bottom: 20px; position: absolute; bottom: 0; width: 100%; z-index: 10;}
+    .nav-item { display: flex; flex-direction: column; align-items: center; color: var(--text-sub); font-size: 10px; gap: 4px;}
+    .nav-item.active { color: var(--primary); }
+    .nav-icon { width: 24px; height: 24px; background: currentColor; mask-size: cover; -webkit-mask-size: cover; }
+    .icon-home { -webkit-mask-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="black" stroke-width="2"/></svg>'); }
+    .icon-review { -webkit-mask-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="black" stroke-width="2"/><path d="M12 6V12L16 14" stroke="black" stroke-width="2"/></svg>'); }
+    .icon-user { -webkit-mask-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 21V19C20 17.9391 19.5786 16.9217 18.8284 16.1716C18.0783 15.4214 17.0609 15 16 15H8C6.93913 15 5.92172 15.4214 5.17157 16.1716C4.42143 16.9217 4 17.9391 4 19V21" stroke="black" stroke-width="2"/><path d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" stroke="black" stroke-width="2"/></svg>'); }
+
+    /* 通用内容区 */
+    .content { flex: 1; overflow-y: auto; padding-bottom: 90px; background: var(--bg-color); }
+    .content::-webkit-scrollbar { display: none; }
+    
+    /* 界面1：首页 */
+    .home-header { padding: 20px; background: var(--white); border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; }
+    .greeting { font-size: 24px; font-weight: bold; color: var(--text-main); margin-bottom: 15px; }
+    .tabs { display: flex; gap: 20px; font-size: 16px; color: var(--text-sub); margin-bottom: 10px; }
+    .tabs .active { color: var(--text-main); font-weight: bold; position: relative; }
+    .tabs .active::after { content: ''; position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%); width: 12px; height: 3px; background: var(--primary); border-radius: 2px; }
+    
+    .course-list { padding: 20px; display: flex; flex-direction: column; gap: 15px; }
+    .course-card { background: var(--white); border-radius: 16px; padding: 15px; display: flex; gap: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); position: relative;}
+    .course-img { width: 70px; height: 70px; background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px;}
+    .course-img.toefl { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); }
+    .course-info h3 { font-size: 16px; margin-bottom: 5px; color: var(--text-main); }
+    .course-info p { font-size: 12px; color: var(--text-sub); margin-bottom: 10px; }
+    .tags span { font-size: 10px; background: #E8F8F2; color: var(--primary-dark); padding: 2px 6px; border-radius: 4px; margin-right: 5px;}
+    .play-btn { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); width: 30px; height: 30px; background: var(--primary); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white;}
+
+    /* 界面2：课程详情 */
+    .detail-cover { height: 220px; background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); position: relative;}
+    .nav-bar { position: absolute; top: 44px; width: 100%; padding: 0 20px; display: flex; justify-content: space-between; color: white; font-size: 20px;}
+    .detail-body { background: var(--white); border-top-left-radius: 24px; border-top-right-radius: 24px; margin-top: -24px; padding: 24px; min-height: 600px; position: relative;}
+    .detail-title { font-size: 22px; font-weight: bold; margin-bottom: 10px; }
+    .detail-stats { display: flex; gap: 15px; font-size: 13px; color: var(--text-sub); margin-bottom: 20px;}
+    .detail-desc { font-size: 14px; color: var(--text-main); line-height: 1.6; margin-bottom: 25px; }
+    .sentence-list-title { font-size: 16px; font-weight: bold; margin-bottom: 15px; }
+    .sentence-item { padding: 15px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; color: var(--text-sub); font-size: 14px;}
+    .sentence-item.locked { opacity: 0.5; }
+    .start-btn-wrap { position: absolute; bottom: 30px; left: 20px; right: 20px; }
+    .btn-primary { background: var(--primary); color: white; border: none; width: 100%; padding: 16px; border-radius: 100px; font-size: 16px; font-weight: bold; cursor: pointer; text-align: center; box-shadow: 0 8px 20px rgba(0,208,132,0.3);}
+
+    /* 界面3 & 4：核心训练（全屏深色模式可选，这里用极简白） */
+    .train-container { display: flex; flex-direction: column; height: 100%; background: var(--white); }
+    .train-nav { padding: 50px 20px 10px; display: flex; justify-content: space-between; align-items: center; font-size: 16px; border-bottom: 1px solid var(--border);}
+    .train-progress { display: flex; flex-direction: column; align-items: center; padding: 20px; }
+    .progress-text { font-size: 14px; color: var(--text-sub); margin-bottom: 10px; }
+    .progress-bar { width: 100%; height: 4px; background: #eee; border-radius: 2px; }
+    .progress-inner { width: 20%; height: 100%; background: var(--primary); border-radius: 2px; }
+    
+    .train-center { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
+    .audio-wave { display: flex; gap: 4px; align-items: center; height: 60px; margin-bottom: 30px;}
+    .wave-line { width: 6px; background: var(--primary); border-radius: 3px; animation: bounce 1s infinite ease-in-out;}
+    .wave-line:nth-child(2) { height: 40px; animation-delay: 0.1s; }
+    .wave-line:nth-child(3) { height: 60px; animation-delay: 0.2s; }
+    .wave-line:nth-child(4) { height: 30px; animation-delay: 0.3s; }
+    .wave-line:nth-child(5) { height: 50px; animation-delay: 0.4s; }
+    
+    @keyframes bounce { 0%, 100% { height: 10px; } 50% { height: 60px; } }
+
+    .blind-tips { font-size: 20px; color: var(--text-sub); font-weight: 300; letter-spacing: 1px;}
+    
+    /* 文本反馈区 */
+    .asr-text-box { width: 100%; text-align: left; font-size: 26px; font-weight: bold; line-height: 1.5; padding: 0 10px;}
+    .word { margin-right: 8px; display: inline-block; transition: all 0.3s;}
+    .word.correct { color: var(--primary); }
+    .word.wrong { color: var(--red); text-decoration: line-through; opacity: 0.7;}
+    .word.miss { color: var(--text-sub); border-bottom: 2px dashed #ccc; }
+    
+    .score-badge { display: inline-block; padding: 4px 12px; background: #E8F8F2; color: var(--primary-dark); border-radius: 20px; font-size: 14px; font-weight: bold; margin-top: 20px; }
+
+    .train-bottom { padding: 20px 20px 40px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+    .action-row { display: flex; justify-content: space-between; width: 100%; padding: 0 20px;}
+    .action-icon { display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--text-sub); font-size: 12px;}
+    .action-icon .circle { width: 44px; height: 44px; border-radius: 50%; background: var(--bg-color); display: flex; justify-content: center; align-items: center; font-size: 18px; color: var(--text-main);}
+    
+    .record-btn-wrapper { width: 80px; height: 80px; border-radius: 50%; border: 4px solid #E8F8F2; display: flex; justify-content: center; align-items: center;}
+    .record-btn { width: 60px; height: 60px; background: var(--primary); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 24px; box-shadow: 0 10px 20px rgba(0,208,132,0.4);}
+    .record-btn.recording { background: var(--red); box-shadow: 0 0 0 10px rgba(255,77,79,0.2); animation: pulse 1.5s infinite;}
+
+    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255,77,79,0.4); } 70% { box-shadow: 0 0 0 15px rgba(255,77,79,0); } 100% { box-shadow: 0 0 0 0 rgba(255,77,79,0); } }
+
+    /* 界面5：AI解析半屏 */
+    .modal-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 100; display: flex; flex-direction: column; justify-content: flex-end;}
+    .modal-content { background: var(--white); height: 65%; border-top-left-radius: 24px; border-top-right-radius: 24px; padding: 24px; display: flex; flex-direction: column;}
+    .modal-handle { width: 40px; height: 4px; background: #ddd; border-radius: 2px; margin: 0 auto 20px; }
+    .modal-title { font-size: 18px; font-weight: bold; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;}
+    .modal-title span { color: #8A2BE2; } /* AI Purple */
+    .ai-card { background: #F8F4FF; border: 1px solid #EBE0FF; border-radius: 12px; padding: 16px; margin-bottom: 15px; }
+    .ai-card h4 { font-size: 14px; color: #555; margin-bottom: 8px; }
+    .ai-card p { font-size: 15px; color: var(--text-main); line-height: 1.5; }
+    .ai-word-list { display: flex; flex-direction: column; gap: 10px; }
+    .ai-word-item { display: flex; justify-content: space-between; font-size: 14px; padding-bottom: 10px; border-bottom: 1px solid #EBE0FF;}
+    .ai-word-en { font-weight: bold; color: var(--text-main); }
+    .ai-word-cn { color: var(--text-sub); }
+
+    /* 界面6：个人中心 */
+    .profile-header { padding: 40px 20px 20px; background: linear-gradient(135deg, #1f1c2c 0%, #928DAB 100%); color: white; display: flex; align-items: center; gap: 15px;}
+    .avatar { width: 64px; height: 64px; border-radius: 50%; background: white; border: 2px solid rgba(255,255,255,0.3); padding: 2px;}
+    .avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+    .user-info h2 { font-size: 20px; margin-bottom: 4px;}
+    .vip-tag { font-size: 10px; background: linear-gradient(90deg, #FAD961 0%, #F76B1C 100%); padding: 2px 8px; border-radius: 10px; font-weight: bold; color: #fff;}
+    
+    .stats-row { display: flex; justify-content: space-around; background: white; padding: 20px 0; margin-bottom: 15px;}
+    .stat-item { text-align: center; }
+    .stat-val { font-size: 20px; font-weight: bold; color: var(--text-main); margin-bottom: 4px; }
+    .stat-val span { font-size: 12px; font-weight: normal;}
+    .stat-label { font-size: 12px; color: var(--text-sub); }
+
+    .menu-list { background: white; }
+    .menu-item { display: flex; justify-content: space-between; padding: 18px 20px; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--text-main);}
+    .menu-item:last-child { border-bottom: none; }
+    .menu-left { display: flex; align-items: center; gap: 12px; }
+    .menu-icon { width: 20px; text-align: center; color: var(--text-sub);}
+    
+</style>
+</head>
+<body>
+
+<div class="header-title">
+    <h1>MOMO回声（同款）MVP 1.0 界面交互设计图</h1>
+    <p>展示从选课、盲听、识别对齐、AI解析到个人中心的完整核心链路</p>
+</div>
+
+<div class="container">
+
+    <!-- Screen 1: 首页 / 课程大厅 -->
+    <div class="phone">
+        <div class="notch"></div>
+        <div class="status-bar"><span>09:41</span><span>📶 🔋</span></div>
+        
+        <div class="content">
+            <div class="home-header">
+                <div class="greeting">早上好，学习者</div>
+                <div class="tabs">
+                    <div class="active">推荐训练</div>
+                    <div>托福 TPO</div>
+                    <div>雅思剑桥</div>
+                    <div>职场</div>
+                </div>
+            </div>
+            
+            <div class="course-list">
+                <!-- Card 1 -->
+                <div class="course-card">
+                    <div class="course-img">🎧</div>
+                    <div class="course-info">
+                        <h3>日常实用口语 50 句</h3>
+                        <p>适合零基础，培养英语语感</p>
+                        <div class="tags"><span>初级</span><span>15分钟</span></div>
+                    </div>
+                    <div class="play-btn">▶</div>
+                </div>
+                <!-- Card 2 -->
+                <div class="course-card">
+                    <div class="course-img toefl">🎓</div>
+                    <div class="course-info">
+                        <h3>托福听力校园对话精选</h3>
+                        <p>攻克新题型，先听后说直觉反射</p>
+                        <div class="tags"><span>高阶</span><span>45句</span></div>
+                    </div>
+                    <div class="play-btn">▶</div>
+                </div>
+                 <!-- Card 3 -->
+                 <div class="course-card">
+                    <div class="course-img">💼</div>
+                    <div class="course-info">
+                        <h3>外企高频会议实战</h3>
+                        <p>摆脱哑巴英语，地道职场表达</p>
+                        <div class="tags"><span>中阶</span><span>20分钟</span></div>
+                    </div>
+                    <div class="play-btn">▶</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-nav">
+            <div class="nav-item active"><div class="nav-icon icon-home"></div>首页</div>
+            <div class="nav-item"><div class="nav-icon icon-review"></div>复习</div>
+            <div class="nav-item"><div class="nav-icon icon-user"></div>我的</div>
+        </div>
+    </div>
+
+    <!-- Screen 2: 课程详情页 -->
+    <div class="phone">
+        <div class="notch"></div>
+        <div class="status-bar dark"><span>09:41</span><span>📶 🔋</span></div>
+        
+        <div class="detail-cover">
+            <div class="nav-bar"><span>←</span><span>⋮</span></div>
+        </div>
+        
+        <div class="detail-body">
+            <div class="detail-title">托福听力校园对话精选</div>
+            <div class="detail-stats">
+                <span>难度：高阶</span>
+                <span>句子：45 句</span>
+                <span>学习：1.2w 人</span>
+            </div>
+            <div class="detail-desc">
+                本训练包精选 TPO 校园场景对话，采用“盲听+逐词复说”模式，帮助你摆脱对中文字幕的依赖，建立托福口语和听力的直觉反射。
+            </div>
+            
+            <div class="sentence-list-title">训练大纲</div>
+            <div class="sentence-item">
+                <span>01</span><span>Excuse me, I'm looking for the...</span>
+            </div>
+            <div class="sentence-item">
+                <span>02</span><span>It's right down the hall, past the...</span>
+            </div>
+            <div class="sentence-item locked">
+                <span>03</span><span>🔒 盲听模式自动解锁</span>
+            </div>
+            <div class="sentence-item locked">
+                <span>04</span><span>🔒 盲听模式自动解锁</span>
+            </div>
+
+            <div class="start-btn-wrap">
+                <button class="btn-primary">开始盲听挑战</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 3: 核心训练 - 盲听模式 -->
+    <div class="phone">
+        <div class="notch"></div>
+        <div class="status-bar"><span>09:41</span><span>📶 🔋</span></div>
+        
+        <div class="train-container">
+            <div class="train-nav">
+                <span>✕</span>
+                <span style="font-weight:bold;">TPO 校园对话</span>
+                <span>⚙️</span>
+            </div>
+            
+            <div class="train-progress">
+                <div class="progress-text">第 2 / 45 句</div>
+                <div class="progress-bar"><div class="progress-inner" style="width: 4.4%;"></div></div>
+            </div>
+
+            <div class="train-center">
+                <div class="audio-wave">
+                    <div class="wave-line"></div><div class="wave-line"></div>
+                    <div class="wave-line"></div><div class="wave-line"></div>
+                    <div class="wave-line"></div>
+                </div>
+                <div class="blind-tips">请仔细听，不要看字幕</div>
+            </div>
+
+            <div class="train-bottom">
+                <div class="action-row">
+                    <div class="action-icon"><div class="circle">🐢</div>慢速</div>
+                    <div class="action-icon"><div class="circle">↺</div>重听</div>
+                </div>
+                <div style="margin-top:20px; font-size: 14px; color: var(--text-sub);">长按开始复说</div>
+                <div class="record-btn-wrapper">
+                    <div class="record-btn">🎤</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 4: 核心训练 - 识别反馈翻开 -->
+    <div class="phone">
+        <div class="notch"></div>
+        <div class="status-bar"><span>09:41</span><span>📶 🔋</span></div>
+        
+        <div class="train-container">
+            <div class="train-nav">
+                <span>✕</span><span style="font-weight:bold;">TPO 校园对话</span><span>⚙️</span>
+            </div>
+            
+            <div class="train-progress">
+                <div class="progress-text">第 2 / 45 句</div>
+                <div class="progress-bar"><div class="progress-inner" style="width: 4.4%;"></div></div>
+            </div>
+
+            <div class="train-center" style="justify-content: flex-start; padding-top: 40px;">
+                <div class="asr-text-box">
+                    <span class="word correct">It's</span>
+                    <span class="word correct">right</span>
+                    <span class="word wrong">down</span>
+                    <span class="word correct">the</span>
+                    <span class="word miss">hall</span>
+                </div>
+                <div class="score-badge">发音准确度 80%</div>
+            </div>
+
+            <div class="train-bottom">
+                <div class="action-row" style="margin-bottom: 20px;">
+                    <div class="action-icon" style="color:#8A2BE2"><div class="circle" style="color:#8A2BE2; background:#F8F4FF">✨</div>AI解析</div>
+                    <div class="action-icon"><div class="circle">↺</div>重听</div>
+                    <div class="action-icon"><div class="circle">⏭</div>跳过</div>
+                </div>
+                <div style="margin-top:0px; font-size: 14px; color: var(--text-sub);">松手结束录音</div>
+                <div class="record-btn-wrapper">
+                    <!-- 正在录音状态 -->
+                    <div class="record-btn recording">◼</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 5: AI 语境解析半屏 -->
+    <div class="phone">
+        <div class="notch"></div>
+        <div class="status-bar"><span>09:41</span><span>📶 🔋</span></div>
+        
+        <!-- 背景复用Screen 4 -->
+        <div class="train-container" style="position:relative; filter: brightness(0.9);">
+            <div class="train-nav"><span>✕</span><span style="font-weight:bold;">TPO 校园对话</span><span>⚙️</span></div>
+            <div class="train-progress"><div class="progress-text">第 2 / 45 句</div><div class="progress-bar"><div class="progress-inner" style="width: 4.4%;"></div></div></div>
+            <div class="train-center" style="justify-content: flex-start; padding-top: 40px;">
+                <div class="asr-text-box">
+                    <span class="word correct">It's</span><span class="word correct">right</span><span class="word wrong">down</span><span class="word correct">the</span><span class="word miss">hall</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI 半屏弹窗 -->
+        <div class="modal-overlay">
+            <div class="modal-content">
+                <div class="modal-handle"></div>
+                <div class="modal-title"><span>✨</span> AI 老师解析</div>
+                
+                <div class="ai-card">
+                    <h4>精准翻译</h4>
+                    <p>就在大厅走廊往下走...</p>
+                </div>
+                
+                <div class="ai-card">
+                    <h4>发音提示</h4>
+                    <p>注意 "right down" 这里的 <strong>t</strong> 往往会失去爆破，不用发出清晰的 /t/ 音，听起来像连在了一起。</p>
+                </div>
+
+                <div class="ai-card">
+                    <h4>重点词汇</h4>
+                    <div class="ai-word-list">
+                        <div class="ai-word-item"><span class="ai-word-en">hall 🔊</span><span class="ai-word-cn">n. 走廊，大厅</span></div>
+                        <div class="ai-word-item" style="border:none; padding-bottom:0;"><span class="ai-word-en">right down 🔊</span><span class="ai-word-cn">adv. 一直沿着...</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Screen 6: 个人中心 -->
+    <div class="phone">
+        <div class="notch"></div>
+        <div class="status-bar dark"><span>09:41</span><span>📶 🔋</span></div>
+        
+        <div class="content" style="background:#F7F8FA;">
+            <div class="profile-header">
+                <div class="avatar"><img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23ccc' width='100' height='100'/><circle cx='50' cy='40' r='20' fill='%23fff'/><path d='M20 100 Q 50 60 80 100 Z' fill='%23fff'/></svg>" alt="avatar"></div>
+                <div class="user-info">
+                    <h2>Momo User</h2>
+                    <span class="vip-tag">PRO 会员</span>
+                </div>
+            </div>
+
+            <div class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-val">28<span>h</span></div>
+                    <div class="stat-label">累计盲听</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-val">1240</div>
+                    <div class="stat-label">掌握句子</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-val">12<span>天</span></div>
+                    <div class="stat-label">连续打卡</div>
+                </div>
+            </div>
+
+            <div class="menu-list">
+                <div class="menu-item">
+                    <div class="menu-left"><span class="menu-icon">❌</span>我的弱项错题本</div>
+                    <div>›</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-left"><span class="menu-icon">📖</span>AI 生词本</div>
+                    <div>›</div>
+                </div>
+            </div>
+            
+            <div class="menu-list" style="margin-top: 15px;">
+                <div class="menu-item">
+                    <div class="menu-left"><span class="menu-icon">⚙️</span>播放与录音设置</div>
+                    <div>›</div>
+                </div>
+                <div class="menu-item">
+                    <div class="menu-left"><span class="menu-icon">👑</span>升级 PRO 会员</div>
+                    <div>›</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-nav">
+            <div class="nav-item"><div class="nav-icon icon-home"></div>首页</div>
+            <div class="nav-item"><div class="nav-icon icon-review"></div>复习</div>
+            <div class="nav-item active"><div class="nav-icon icon-user"></div>我的</div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
