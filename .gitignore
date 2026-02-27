@@ -76,3 +76,9 @@ secrets/
 tmp/
 .temp/
 .heartbeat
+
+# Backend
+backend/node_modules/
+backend/dist/
+backend/coverage/
+backend/.env
