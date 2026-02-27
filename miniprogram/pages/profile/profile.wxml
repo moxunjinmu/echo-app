@@ -1,0 +1,35 @@
+<!--pages/profile/profile.wxml-->
+<view class="container">
+  <!-- 用户信息卡片 -->
+  <view class="profile-card">
+    <image class="avatar" src="{{userInfo.avatar_url || '/assets/images/default-avatar.png'}}" mode="aspectFill"></image>
+    <view class="user-info">
+      <text class="nickname">{{userInfo.nickname || '未登录'}}</text>
+      <text class="vip-badge" wx:if="{{userInfo.vip_expire_at}}">VIP会员</text>
+    </view>
+  </view>
+
+  <!-- 菜单列表 -->
+  <view class="menu-list">
+    <view class="menu-item" bindtap="handleMenuTap" data-type="study">
+      <text class="menu-icon">📊</text>
+      <text class="menu-text">学习数据</text>
+      <text class="menu-arrow">›</text>
+    </view>
+
+    <view class="menu-item" bindtap="handleMenuTap" data-type="weakness">
+      <text class="menu-icon">❌</text>
+      <text class="menu-text">弱项错题本</text>
+      <text class="menu-arrow">›</text>
+    </view>
+
+    <view class="menu-item" bindtap="handleMenuTap" data-type="vocabulary">
+      <text class="menu-icon">📖</text>
+      <text class="menu-text">生词本</text>
+      <text class="menu-arrow">›</text>
+    </view>
+  </view>
+
+  <!-- 退出登录按钮 -->
+  <button class="btn-logout" bindtap="handleLogout">退出登录</button>
+</view>

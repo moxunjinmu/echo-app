@@ -1,0 +1,87 @@
+/* pages/profile/profile.wxss */
+.container {
+  padding: 32rpx;
+}
+
+.profile-card {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #2C2F36 0%, #1A1C20 100%);
+  border-radius: 24rpx;
+  padding: 40rpx 32rpx;
+  margin-bottom: 32rpx;
+}
+
+.avatar {
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 50%;
+  margin-right: 32rpx;
+  border: 4rpx solid rgba(255, 255, 255, 0.3);
+}
+
+.user-info {
+  flex: 1;
+}
+
+.nickname {
+  display: block;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #FFFFFF;
+  margin-bottom: 12rpx;
+}
+
+.vip-badge {
+  display: inline-block;
+  background: linear-gradient(90deg, #FAD961 0%, #F76B1C 100%);
+  color: #FFFFFF;
+  font-size: 22rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+}
+
+.menu-list {
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  overflow: hidden;
+  margin-bottom: 32rpx;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 32rpx;
+  border-bottom: 1rpx solid #EEEEEE;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-icon {
+  font-size: 40rpx;
+  margin-right: 24rpx;
+}
+
+.menu-text {
+  flex: 1;
+  font-size: 30rpx;
+  color: #333333;
+}
+
+.menu-arrow {
+  font-size: 32rpx;
+  color: #CCCCCC;
+}
+
+.btn-logout {
+  background-color: #FFFFFF;
+  color: #FF4D4F;
+  border: 2rpx solid #FF4D4F;
+  border-radius: 100rpx;
+  padding: 28rpx 40rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-top: 60rpx;
+}

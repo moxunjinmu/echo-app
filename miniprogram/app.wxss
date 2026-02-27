@@ -1,0 +1,95 @@
+/* app.wxss */
+page {
+  background-color: #F7F8FA;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  color: #333333;
+}
+
+.container {
+  padding: 20rpx;
+}
+
+/* 主题色 */
+.primary-color {
+  color: #00D084;
+}
+
+.primary-bg {
+  background-color: #00D084;
+}
+
+/* 文本颜色 */
+.text-main {
+  color: #333333;
+}
+
+.text-sub {
+  color: #888888;
+}
+
+.text-white {
+  color: #FFFFFF;
+}
+
+/* 背景色 */
+.bg-white {
+  background-color: #FFFFFF;
+}
+
+.bg-gray {
+  background-color: #F7F8FA;
+}
+
+/* 按钮样式 */
+.btn-primary {
+  background-color: #00D084;
+  color: #FFFFFF;
+  border-radius: 100rpx;
+  padding: 24rpx 40rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  text-align: center;
+}
+
+.btn-secondary {
+  background-color: #FFFFFF;
+  color: #00D084;
+  border: 2rpx solid #00D084;
+  border-radius: 100rpx;
+  padding: 22rpx 38rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* 卡片样式 */
+.card {
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.02);
+}
+
+/* Flex 布局 */
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
