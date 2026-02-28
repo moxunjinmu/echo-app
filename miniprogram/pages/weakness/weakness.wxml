@@ -1,0 +1,90 @@
+<!--pages/weakness/weakness.wxml-->
+<view class="weakness-page">
+  <!-- Tab 切换 -->
+  <view class="tabs">
+    <view
+      class="tab-item {{currentTab === 'wrong' ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="wrong"
+    >
+      听力错句
+    </view>
+    <view
+      class="tab-item {{currentTab === 'vocabulary' ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="vocabulary"
+    >
+      生词本
+    </view>
+  </view>
+
+  <!-- 听力错句列表 -->
+  <view wx:if="{{currentTab === 'wrong'}}" class="content">
+    <view wx:if="{{weaknessList.length === 0}}" class="empty">
+      <text class="empty-icon">🎉</text>
+      <text class="empty-text">太棒了！没有弱项</text>
+    </view>
+
+    <view
+      wx:for="{{weaknessList}}"
+      wx:key="log_id"
+      class="weakness-card"
+    >
+      <view class="weakness-header">
+        <view class="source">
+          <text class="course-name">{{item.course_title}}</text>
+          <text class="sentence-index">第 {{item.sentence_index}} 句</text>
+        </view>
+        <view class="score-badge low">
+          {{item.accuracy_score}}%
+        </view>
+      </view>
+
+      <view class="sentence-text">
+        <text class="original">{{item.original_text}}</text>
+      </view>
+
+      <view class="weakness-actions">
+        <button class="btn-audio" bindtap="playAudio" data-url="{{item.audio_url}}">
+          🔊 原音
+        </button>
+        <button class="btn-analyze" bindtap="showAnalysis" data-id="{{item.log_id}}">
+          ✨ 解析
+        </button>
+        <button class="btn-remove" bindtap="removeWeakness" data-id="{{item.log_id}}">
+          ✓ 已掌握
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 生词本列表 -->
+  <view wx:if="{{currentTab === 'vocabulary'}}" class="content">
+    <view wx:if="{{vocabularyList.length === 0}}" class="empty">
+      <text class="empty-icon">📚</text>
+      <text class="empty-text">生词本为空</text>
+    </view>
+
+    <view
+      wx:for="{{vocabularyList}}"
+      wx:key="word_id"
+      class="vocabulary-card"
+    >
+      <view class="vocab-header">
+        <text class="vocab-word">{{item.word}} 🔊</text>
+        <button class="btn-delete" bindtap="deleteWord" data-id="{{item.word_id}}">
+          🗑
+        </button>
+      </view>
+      <view class="vocab-meaning">{{item.meaning}}</view>
+      <view class="vocab-example" wx:if="{{item.example}}">
+        例：{{item.example}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部浮动按钮 -->
+  <view class="float-btn" bindtap="batchTrain" wx:if="{{weaknessList.length > 0}}">
+    🔥 打包攻克错题 ({{weaknessList.length}})
+  </view>
+</view>
