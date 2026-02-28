@@ -1,0 +1,68 @@
+<!--pages/progress/progress.wxml-->
+<view class="progress-page">
+  <!-- 周历打卡条 -->
+  <view class="week-checkin">
+    <view
+      wx:for="{{weekCheckin}}"
+      wx:key="day"
+      class="checkin-day {{item.checked ? 'checked' : ''}}"
+    >
+      <text class="day-text">{{item.day}}</text>
+      <view class="checkin-dot">{{item.checked ? '✓' : ''}}</view>
+    </view>
+  </view>
+
+  <!-- 今日目标卡片 -->
+  <view class="today-goal-card">
+    <view class="progress-circle">
+      <text class="percent-text">{{todayProgress.percent}}%</text>
+    </view>
+    <view class="goal-info">
+      <view class="goal-title">今日目标：盲听 {{todayProgress.target}} 分钟</view>
+      <view class="goal-desc">
+        已学 {{todayProgress.completed}} 分钟，
+        {{todayProgress.completed < todayProgress.target ? '再学' : '已达标'}}
+        {{todayProgress.target - todayProgress.completed}} 分钟
+      </view>
+    </view>
+  </view>
+
+  <!-- 在学课程列表 -->
+  <view class="courses-section">
+    <view class="section-title">在学课程</view>
+
+    <view
+      wx:for="{{inProgressCourses}}"
+      wx:key="course_id"
+      class="course-progress-card"
+    >
+      <view class="course-header">
+        <text class="course-title">{{item.title}}</text>
+        <view class="score-badge">均分 {{item.average_score}}</view>
+      </view>
+
+      <view class="course-progress">
+        <text class="progress-text">
+          已完成 {{item.completed_sentences}} / {{item.total_sentences}} 句
+        </text>
+        <text class="progress-percent">
+          {{item.completed_sentences / item.total_sentences * 100}}%
+        </text>
+      </view>
+
+      <progress
+        percent="{{item.completed_sentences / item.total_sentences * 100}}"
+        stroke-width="6"
+        activeColor="#00D084"
+      />
+
+      <button
+        class="btn-continue"
+        bindtap="onContinueTap"
+        data-course-id="{{item.course_id}}"
+      >
+        继续学习 第 {{item.completed_sentences + 1}} 句
+      </button>
+    </view>
+  </view>
+</view>

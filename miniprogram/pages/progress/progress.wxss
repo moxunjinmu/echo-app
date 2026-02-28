@@ -1,0 +1,145 @@
+/* pages/progress/progress.wxss */
+.progress-page {
+  padding: 32rpx;
+  background-color: #F7F8FA;
+  min-height: 100vh;
+}
+
+/* 周历打卡 */
+.week-checkin {
+  display: flex;
+  justify-content: space-between;
+  background-color: #FFFFFF;
+  padding: 32rpx;
+  border-radius: 16rpx;
+  margin-bottom: 24rpx;
+}
+
+.checkin-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.day-text {
+  font-size: 24rpx;
+  color: #888888;
+  margin-bottom: 12rpx;
+}
+
+.checkin-dot {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  background-color: #EEEEEE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+}
+
+.checkin-day.checked .checkin-dot {
+  background-color: #00D084;
+  color: #FFFFFF;
+}
+
+/* 今日目标卡片 */
+.today-goal-card {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #2C2F36 0%, #1A1C20 100%);
+  color: #FFFFFF;
+  padding: 32rpx;
+  border-radius: 16rpx;
+  margin-bottom: 24rpx;
+}
+
+.progress-circle {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  border: 6rpx solid #00D084;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 32rpx;
+}
+
+.percent-text {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.goal-info {
+  flex: 1;
+}
+
+.goal-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  margin-bottom: 12rpx;
+}
+
+.goal-desc {
+  font-size: 24rpx;
+  color: #AAAAAA;
+}
+
+/* 课程列表 */
+.courses-section {
+  margin-top: 32rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 24rpx;
+}
+
+.course-progress-card {
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 24rpx;
+}
+
+.course-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+}
+
+.course-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333333;
+}
+
+.score-badge {
+  background-color: #E8F8F2;
+  color: #00A368;
+  font-size: 24rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+}
+
+.course-progress {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12rpx;
+  font-size: 24rpx;
+  color: #888888;
+}
+
+.btn-continue {
+  background-color: #00D084;
+  color: #FFFFFF;
+  border: none;
+  padding: 20rpx;
+  border-radius: 100rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-top: 16rpx;
+}
