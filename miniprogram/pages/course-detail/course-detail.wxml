@@ -1,0 +1,60 @@
+<!--pages/course-detail/course-detail.wxml-->
+<view class="course-detail">
+  <!-- 封面区域 -->
+  <view class="cover-section" style="background-image: url({{course.cover_url}})">
+    <view class="cover-mask">
+      <view class="nav-bar">
+        <view class="back-btn" bindtap="goBack">←</view>
+        <view class="more-btn">⋮</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 课程信息卡片 -->
+  <view class="info-card">
+    <view class="course-title">{{course.title}}</view>
+
+    <view class="course-stats">
+      <text>难度：{{course.difficulty_text}}</text>
+      <text>|</text>
+      <text>句子：{{course.total_sentences}} 句</text>
+      <text>|</text>
+      <text>学习：{{course.learners_count}} 人</text>
+    </view>
+
+    <view class="course-desc">{{course.description}}</view>
+
+    <!-- 训练大纲 -->
+    <view class="outline-section">
+      <view class="outline-header">
+        <text class="outline-title">训练大纲</text>
+        <text class="outline-progress">已学 {{userProgress}}%</text>
+      </view>
+
+      <view class="sentences-list">
+        <view
+          wx:for="{{sentences}}"
+          wx:key="sentence_id"
+          class="sentence-item {{item.completed ? 'completed' : ''}} {{item.locked ? 'locked' : ''}}"
+          bindtap="onSentenceTap"
+          data-index="{{index}}"
+        >
+          <view class="sentence-index">
+            {{item.completed ? '✓' : item.sentence_index}}
+          </view>
+          <view class="sentence-text">
+            {{item.locked ? '🔒 盲听挑战自动解锁' : item.text_en}}
+          </view>
+          <view class="sentence-play" wx:if="{{!item.locked}}">▶</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部按钮 -->
+  <view class="bottom-btn">
+    <button class="btn-primary" bindtap="onStartTraining">
+      {{userProgress > 0 ? '继续盲听挑战' : '开始盲听挑战'}}
+    </button>
+  </view>
+</view>
