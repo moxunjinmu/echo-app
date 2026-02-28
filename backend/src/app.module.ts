@@ -10,6 +10,7 @@ import { TrainingModule } from './modules/training/training.module';
 import { AIModule } from './modules/ai/ai.module';
 import { ASRModule } from './modules/asr/asr.module';
 import { PaymentModule } from './modules/payment/payment.module';
+import { AdminModule } from './modules/admin/admin.module';
 
 @Module({
   imports: [
