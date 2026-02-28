@@ -1,5 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AdminController } from '../src/modules/admin/admin.controller';
+import { CourseService } from '../src/modules/course/course.service';
+import { AdminGuard } from '../src/modules/admin/admin.guard';
 
 describe('AdminController', () => {
   let controller: AdminController;
@@ -16,11 +18,11 @@ describe('AdminController', () => {
       controllers: [AdminController],
       providers: [
         {
-          provide: 'CourseService',
+          provide: CourseService,
           useValue: mockCourseService,
         },
         {
-          provide: 'AdminGuard',
+          provide: AdminGuard,
           useValue: { canActivate: () => true },
         },
       ],
