@@ -8,6 +8,7 @@ import { UserModule } from './modules/user/user.module';
 import { CourseModule } from './modules/course/course.module';
 import { TrainingModule } from './modules/training/training.module';
 import { AIModule } from './modules/ai/ai.module';
+import { ASRModule } from './modules/asr/asr.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { AIModule } from './modules/ai/ai.module';
     CourseModule,
     TrainingModule,
     AIModule,
+    ASRModule,
   ],
   controllers: [AppController],
   providers: [AppService],

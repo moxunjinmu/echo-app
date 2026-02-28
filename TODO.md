@@ -12,64 +12,64 @@
 ### 阶段 0：项目初始化与基础设施 (1 周)
 
 #### 后端基础设施
-- [ ] 搭建后端开发环境
-  - [ ] Node.js/NestJS 项目初始化
-  - [ ] MySQL 数据库创建与配置
+- [x] 搭建后端开发环境
+  - [x] Node.js/NestJS 项目初始化
+  - [x] MySQL 数据库创建与配置
   - [ ] Redis 连接配置
   - [ ] 对象存储 (OSS/COS) 配置
-- [ ] 数据库表结构创建
-  - [ ] users 用户表
-  - [ ] courses 课程表
-  - [ ] sentences 句子表
-  - [ ] user_study_logs 学习进度表
+- [x] 数据库表结构创建
+  - [x] users 用户表
+  - [x] courses 课程表
+  - [x] sentences 句子表
+  - [x] user_study_logs 学习进度表
   - [ ] user_vocabulary 生词本表
   - [ ] orders 订单表
-- [ ] 基础服务搭建
-  - [ ] 统一 API Gateway 配置
-  - [ ] JWT 认证中间件
-  - [ ] 统一错误处理中间件
+- [x] 基础服务搭建
+  - [x] 统一 API Gateway 配置
+  - [x] JWT 认证中间件
+  - [x] 统一错误处理中间件
   - [ ] 日志系统 (Winston/Pino)
-- [ ] 开发工具配置
-  - [ ] Swagger/API 文档自动生成
-  - [ ] ESLint + Prettier
-  - [ ] Jest 单元测试框架
+- [x] 开发工具配置
+  - [x] Swagger/API 文档自动生成
+  - [x] ESLint + Prettier
+  - [x] Jest 单元测试框架
   - [ ] GitHub Actions CI/CD
 
 #### 微信小程序初始化
-- [ ] 创建小程序项目
-  - [ ] 微信开发者工具配置
+- [x] 创建小程序项目
+  - [x] 微信开发者工具配置
   - [ ] AppID 申请与配置
-  - [ ] 项目目录结构规划
-  - [ ] 基础样式系统 (颜色、字体、间距)
-- [ ] 基础组件封装
+  - [x] 项目目录结构规划
+  - [x] 基础样式系统 (颜色、字体、间距)
+- [x] 基础组件封装
   - [ ] 自定义导航栏组件
-  - [ ] 底部 TabBar 组件
-  - [ ] 课程卡片组件
-  - [ ] 进度条组件
-  - [ ] 按钮组件 (主要/次要/禁用)
-- [ ] 工具库封装
-  - [ ] HTTP 请求封装 (wx.request)
-  - [ ] 本地存储工具
-  - [ ] 时间格式化工具
-  - [ ] 用户状态管理
+  - [x] 底部 TabBar 组件
+  - [x] 课程卡片组件
+  - [x] 进度条组件
+  - [x] 按钮组件 (主要/次要/禁用)
+- [x] 工具库封装
+  - [x] HTTP 请求封装 (wx.request)
+  - [x] 本地存储工具
+  - [x] 时间格式化工具
+  - [x] 用户状态管理
 
 #### Flutter App 初始化
-- [ ] 创建 Flutter 项目
+- [x] 创建 Flutter 项目
   - [ ] Flutter SDK 环境配置
-  - [ ] 项目目录结构规划
-  - [ ] 路由配置 (go_router/auto_route)
-  - [ ] 状态管理配置 (Riverpod)
-- [ ] 基础组件封装
-  - [ ] 自定义 AppBar 组件
-  - [ ] 底部导航组件
-  - [ ] 课程卡片组件
+  - [x] 项目目录结构规划
+  - [x] 路由配置 (go_router/auto_route)
+  - [x] 状态管理配置 (Riverpod)
+- [x] 基础组件封装
+  - [x] 自定义 AppBar 组件
+  - [x] 底部导航组件
+  - [x] 课程卡片组件
   - [ ] 环形进度组件 (CustomPaint)
-  - [ ] 按钮组件
-- [ ] 工具库封装
-  - [ ] HTTP 请求封装 (Dio + Retrofit)
+  - [x] 按钮组件
+- [x] 工具库封装
+  - [x] HTTP 请求封装 (Dio + Retrofit)
   - [ ] 本地存储 (SQLite + SharedPreferences)
-  - [ ] 时间格式化工具
-  - [ ] 状态持久化
+  - [x] 时间格式化工具
+  - [x] 状态持久化
 
 ---
 
