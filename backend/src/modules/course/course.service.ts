@@ -107,4 +107,27 @@ export class CourseService implements OnModuleInit {
       order: { sentence_index: 'ASC' },
     });
   }
+
+  /**
+   * 创建课程
+   */
+  async createCourse(data: Partial<Course>): Promise<Course> {
+    const course = this.courseRepository.create(data);
+    return this.courseRepository.save(course);
+  }
+
+  /**
+   * 更新课程
+   */
+  async updateCourse(id: string, data: Partial<Course>): Promise<Course | null> {
+    await this.courseRepository.update(id, data);
+    return this.findOne(id);
+  }
+
+  /**
+   * 删除课程
+   */
+  async deleteCourse(id: string): Promise<void> {
+    await this.courseRepository.delete(id);
+  }
 }

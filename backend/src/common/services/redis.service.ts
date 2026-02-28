@@ -14,7 +14,7 @@ export class RedisService implements OnModuleInit {
         url: `redis://${this.configService.get('REDIS_HOST', 'localhost')}:${this.configService.get('REDIS_PORT', 6379)}`,
       });
 
-      this.client.on('error', (err) => console.error('Redis Client Error', err));
+      this.client.on('error', (err: any) => console.error('Redis Client Error', err));
       this.client.on('connect', () => console.log('✅ Redis Connected'));
 
       await this.client.connect();
