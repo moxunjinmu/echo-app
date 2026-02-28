@@ -1,0 +1,17 @@
+<!--components/course-card/course-card.wxml-->
+<view class="course-card" bindtap="handleTap">
+  <image class="course-cover" src="{{course.cover_url}}" mode="aspectFill"></image>
+  <view class="course-info">
+    <view class="course-title">{{course.title}}</view>
+    <view class="course-desc">{{course.description}}</view>
+    <view class="course-tags">
+      <text class="tag difficulty">{{difficultyText}}</text>
+      <text class="tag duration">{{course.estimated_minutes}}分钟</text>
+      <text class="tag sentences">{{course.total_sentences}}句</text>
+    </view>
+  </view>
+  <view class="play-btn">
+    <text class="icon">▶</text>
+  </view>
+  <view class="vip-badge" wx:if="{{course.is_vip_only}}">VIP</view>
+</view>

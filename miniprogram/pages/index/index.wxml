@@ -6,13 +6,37 @@
     <text class="username">{{userInfo.nickname || '学习者'}}</text>
   </view>
 
+  <!-- Tab 导航 -->
+  <scroll-view class="tabs" scroll-x>
+    <view
+      class="tab-item {{currentTab === item.value ? 'active' : ''}}"
+      wx:for="{{tabs}}"
+      wx:key="value"
+      bindtap="handleTabTap"
+      data-tab="{{item.value}}"
+    >
+      {{item.label}}
+    </view>
+  </scroll-view>
+
   <!-- 课程列表 -->
   <view class="course-list">
-    <text class="section-title">推荐训练</text>
-    
-    <view class="empty-state" wx:if="{{!courses.length}}">
-      <text class="empty-icon">📚</text>
-      <text class="empty-text">课程数据加载中...</text>
+    <view wx:if="{{loading}}" class="loading">
+      <text>加载中...</text>
     </view>
+
+    <view wx:elif="{{courses.length === 0}}" class="empty-state">
+      <text class="empty-icon">📚</text>
+      <text class="empty-text">暂无课程数据</text>
+    </view>
+
+    <block wx:else>
+      <course-card
+        wx:for="{{courses}}"
+        wx:key="course_id"
+        course="{{item}}"
+        bind:tap="handleCourseTap"
+      />
+    </block>
   </view>
 </view>

@@ -1,10 +1,10 @@
 /* pages/index/index.wxss */
 .container {
-  padding: 40rpx 32rpx;
+  padding-bottom: 20rpx;
 }
 
 .header {
-  margin-bottom: 40rpx;
+  padding: 40rpx 32rpx 24rpx;
 }
 
 .greeting {
@@ -21,18 +21,50 @@
   color: #333333;
 }
 
-.section-title {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #333333;
-  margin-bottom: 24rpx;
+/* Tabs */
+.tabs {
+  white-space: nowrap;
+  padding: 0 32rpx 24rpx;
 }
 
+.tab-item {
+  display: inline-block;
+  padding: 12rpx 24rpx;
+  margin-right: 24rpx;
+  font-size: 28rpx;
+  color: #888888;
+  position: relative;
+}
+
+.tab-item.active {
+  color: #333333;
+  font-weight: bold;
+}
+
+.tab-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24rpx;
+  height: 6rpx;
+  background-color: #00D084;
+  border-radius: 3rpx;
+}
+
+/* 课程列表 */
+.course-list {
+  padding: 0 32rpx;
+}
+
+.loading,
 .empty-state {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 120rpx 0;
+  color: #888888;
 }
 
 .empty-icon {
@@ -42,5 +74,4 @@
 
 .empty-text {
   font-size: 28rpx;
-  color: #888888;
 }

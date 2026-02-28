@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "Echo",
-  "usingComponents": {}
+  "usingComponents": {
+    "course-card": "/components/course-card/course-card"
+  }
 }
