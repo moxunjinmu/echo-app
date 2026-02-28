@@ -1,0 +1,56 @@
+<!--pages/training/training.wxml-->
+<view class="training-container">
+  <!-- 进度条 -->
+  <view class="progress-bar">
+    <text class="progress-text">第 {{currentIndex}} / {{totalSentences}} 句</text>
+    <progress percent="{{currentIndex / totalSentences * 100}}" stroke-width="6" activeColor="#00D084"/>
+  </view>
+
+  <!-- 句子展示区 -->
+  <view class="sentence-area">
+    <view wx:if="{{!showResult}}" class="hint-text">
+      <text>请仔细听，不要看字幕</text>
+    </view>
+
+    <view wx:else class="result-area">
+      <view class="words">
+        <text
+          wx:for="{{words}}"
+          wx:key="index"
+          class="word {{item.status}}"
+        >{{item.text}} </text>
+      </view>
+      <view class="score-badge">
+        发音准确度 {{accuracyScore}}%
+      </view>
+    </view>
+  </view>
+
+  <!-- 控制区 -->
+  <view class="controls">
+    <!-- 音频波形（模拟） -->
+    <view wx:if="{{isPlaying}}" class="audio-wave">
+      <view class="wave-line"></view>
+      <view class="wave-line"></view>
+      <view class="wave-line"></view>
+      <view class="wave-line"></view>
+      <view class="wave-line"></view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="button-group">
+      <button class="btn-secondary" bindtap="playAudio" disabled="{{isPlaying}}">
+        🔊 重听
+      </button>
+      <button class="btn-record {{isRecording ? 'recording' : ''}}" bindtouchstart="toggleRecord" bindtouchend="toggleRecord">
+        {{isRecording ? '录音中...' : '按住说话'}}
+      </button>
+    </view>
+
+    <!-- 结果操作 -->
+    <view wx:if="{{showResult}}" class="result-actions">
+      <button class="btn-secondary" bindtap="retry">重新训练</button>
+      <button class="btn-primary" bindtap="nextSentence">下一句</button>
+    </view>
+  </view>
+</view>

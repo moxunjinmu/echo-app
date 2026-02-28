@@ -1,0 +1,152 @@
+/* pages/training/training.wxss */
+.training-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 32rpx;
+  background-color: #FFFFFF;
+}
+
+.progress-bar {
+  margin-bottom: 48rpx;
+}
+
+.progress-text {
+  display: block;
+  font-size: 28rpx;
+  color: #888888;
+  margin-bottom: 16rpx;
+}
+
+.sentence-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 400rpx;
+}
+
+.hint-text {
+  font-size: 36rpx;
+  color: #888888;
+}
+
+.result-area {
+  text-align: center;
+}
+
+.words {
+  font-size: 36rpx;
+  line-height: 1.8;
+  margin-bottom: 32rpx;
+}
+
+.word {
+  display: inline-block;
+  margin: 0 8rpx;
+}
+
+.word.correct {
+  color: #00D084;
+}
+
+.word.wrong {
+  color: #FF4D4F;
+  text-decoration: line-through;
+}
+
+.score-badge {
+  display: inline-block;
+  background-color: #E8F8F2;
+  color: #00A368;
+  padding: 12rpx 32rpx;
+  border-radius: 32rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.controls {
+  padding: 48rpx 0;
+}
+
+.audio-wave {
+  display: flex;
+  justify-content: center;
+  gap: 8rpx;
+  margin-bottom: 48rpx;
+  height: 120rpx;
+}
+
+.wave-line {
+  width: 12rpx;
+  background-color: #00D084;
+  border-radius: 6rpx;
+  animation: wave 1s infinite ease-in-out;
+}
+
+.wave-line:nth-child(1) { animation-delay: 0s; }
+.wave-line:nth-child(2) { animation-delay: 0.1s; }
+.wave-line:nth-child(3) { animation-delay: 0.2s; }
+.wave-line:nth-child(4) { animation-delay: 0.3s; }
+.wave-line:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes wave {
+  0%, 100% { height: 40rpx; }
+  50% { height: 120rpx; }
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 24rpx;
+  margin-bottom: 32rpx;
+}
+
+.btn-secondary {
+  flex: 1;
+  background-color: #F7F8FA;
+  color: #333333;
+  border: none;
+  padding: 28rpx;
+  border-radius: 100rpx;
+  font-size: 32rpx;
+}
+
+.btn-record {
+  flex: 1;
+  background-color: #00D084;
+  color: #FFFFFF;
+  border: none;
+  padding: 28rpx;
+  border-radius: 100rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.btn-record.recording {
+  background-color: #FF4D4F;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0.4); }
+  70% { box-shadow: 0 0 0 20rpx rgba(255, 77, 79, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0); }
+}
+
+.result-actions {
+  display: flex;
+  gap: 24rpx;
+}
+
+.btn-primary {
+  flex: 1;
+  background-color: #00D084;
+  color: #FFFFFF;
+  border: none;
+  padding: 28rpx;
+  border-radius: 100rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+}
