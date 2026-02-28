@@ -16,7 +16,7 @@ export class PaymentService {
   /**
    * 产品定价
    */
-  private readonly pricing = {
+  private readonly pricing: Record<string, { price: number; days: number; original_price: number }> = {
     monthly: { price: 28, days: 30, original_price: 38 },
     quarterly: { price: 69, days: 90, original_price: 114 },
     yearly: { price: 198, days: 365, original_price: 456 },

@@ -1,0 +1,66 @@
+<!--pages/settings/settings.wxml-->
+<view class="settings-page">
+  <view class="settings-group">
+    <view class="group-title">播放设置</view>
+
+    <view class="setting-item">
+      <text class="setting-label">播放倍速</text>
+      <picker
+        mode="selector"
+        range="{{speedOptions}}"
+        value="{{speedOptions.indexOf(settings.playbackSpeed)}}"
+        bindchange="onSpeedChange"
+      >
+        <view class="setting-value">
+          {{settings.playbackSpeed}}x ›
+        </view>
+      </picker>
+    </view>
+
+    <view class="setting-item">
+      <text class="setting-label">自动连播</text>
+      <switch
+        checked="{{settings.autoPlay}}"
+        bindchange="onAutoPlayChange"
+        color="#00D084"
+      />
+    </view>
+
+    <view class="setting-item">
+      <text class="setting-label">显示中文翻译</text>
+      <switch
+        checked="{{settings.showChinese}}"
+        bindchange="onShowChineseChange"
+        color="#00D084"
+      />
+    </view>
+
+    <view class="setting-item">
+      <text class="setting-label">重复播放次数</text>
+      <input
+        type="number"
+        value="{{settings.repeatCount}}"
+        bindblur="onRepeatCountChange"
+        class="setting-input"
+      />
+    </view>
+  </view>
+
+  <view class="settings-group">
+    <view class="group-title">其他</view>
+
+    <view class="setting-item" bindtap="onClearCache">
+      <text class="setting-label">清除缓存</text>
+      <text class="setting-value">›</text>
+    </view>
+
+    <view class="setting-item" bindtap="onLogout">
+      <text class="setting-label logout">退出登录</text>
+      <text class="setting-value">›</text>
+    </view>
+  </view>
+
+  <view class="version-info">
+    <text>版本 0.1.0</text>
+  </view>
+</view>
