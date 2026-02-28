@@ -1,0 +1,81 @@
+<!--pages/vip-paywall/vip-paywall.wxml-->
+<view class="vip-page">
+  <!-- 顶部深色区域 -->
+  <view class="header-section">
+    <view class="vip-icon">👑</view>
+    <view class="vip-title">升级 PRO 会员</view>
+    <view class="vip-subtitle">解锁所有真题库，无限次AI解析辅导</view>
+  </view>
+
+  <!-- 权益列表 -->
+  <view class="benefits-card">
+    <view class="benefit-item">
+      <view class="benefit-icon">✨</view>
+      <view class="benefit-content">
+        <view class="benefit-title">无限次 AI 语境解析</view>
+        <view class="benefit-desc">
+          突破每日5次限制，随时随地呼唤AI老师讲授发音连读与语境翻译。
+        </view>
+      </view>
+    </view>
+
+    <view class="benefit-item">
+      <view class="benefit-icon">📚</view>
+      <view class="benefit-content">
+        <view class="benefit-title">解锁全站高阶/真题库</view>
+        <view class="benefit-desc">
+          畅听 TPO、剑桥雅思等核心应试资料包。
+        </view>
+      </view>
+    </view>
+
+    <view class="benefit-item">
+      <view class="benefit-icon">📊</view>
+      <view class="benefit-content">
+        <view class="benefit-title">专属弱项分析报告</view>
+        <view class="benefit-desc">
+          每周生成口语发音弱点报告，针对性攻克易错词。
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 价格卡片 -->
+  <view class="pricing-cards">
+    <view
+      class="price-card {{selectedPlan === 'monthly' ? 'selected' : ''}}"
+      bindtap="selectPlan"
+      data-plan="monthly"
+    >
+      <view class="plan-name">连续包月</view>
+      <view class="plan-price">
+        <text class="currency">¥</text>
+        <text class="amount">28</text>
+      </view>
+      <view class="plan-original">¥38/月</view>
+    </view>
+
+    <view
+      class="price-card recommend {{selectedPlan === 'yearly' ? 'selected' : ''}}"
+      bindtap="selectPlan"
+      data-plan="yearly"
+    >
+      <view class="recommend-badge">限时特惠</view>
+      <view class="plan-name">年度会员</view>
+      <view class="plan-price">
+        <text class="currency">¥</text>
+        <text class="amount">198</text>
+      </view>
+      <view class="plan-original">¥456/年</view>
+      <view class="plan-note">折合 ¥16.5/月</view>
+    </view>
+  </view>
+
+  <!-- 支付按钮 -->
+  <view class="pay-section">
+    <button class="btn-pay" bindtap="handlePay">
+      立即开通 PRO
+    </button>
+    <view class="pay-note">到期自动续费，可随时取消</view>
+  </view>
+</view>
