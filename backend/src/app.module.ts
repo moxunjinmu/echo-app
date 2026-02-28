@@ -45,6 +45,7 @@ import { AdminModule } from './modules/admin/admin.module';
     AIModule,
     ASRModule,
     PaymentModule,
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [AppService],
