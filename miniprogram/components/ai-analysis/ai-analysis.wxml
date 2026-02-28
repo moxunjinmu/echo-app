@@ -1,0 +1,59 @@
+<!--components/ai-analysis/ai-analysis.wxml-->
+<view class="ai-modal" wx:if="{{visible}}">
+  <view class="modal-mask" bindtap="onClose"></view>
+
+  <view class="modal-content">
+    <view class="modal-handle"></view>
+
+    <view class="modal-header">
+      <text class="ai-icon">✨</text>
+      <text class="modal-title">AI 老师解析</text>
+    </view>
+
+    <!-- 精准翻译 -->
+    <view class="analysis-card">
+      <view class="card-title">精准翻译</view>
+      <view class="card-content">{{analysis.translation}}</view>
+    </view>
+
+    <!-- 发音提示 -->
+    <view class="analysis-card" wx:if="{{analysis.pronunciation_tips}}">
+      <view class="card-title">发音提示</view>
+      <view class="card-content">{{analysis.pronunciation_tips}}</view>
+    </view>
+
+    <!-- 重点词汇 -->
+    <view class="analysis-card" wx:if="{{analysis.key_vocabulary.length > 0}}">
+      <view class="card-title">重点词汇</view>
+      <view class="vocabulary-list">
+        <view
+          class="vocabulary-item"
+          wx:for="{{analysis.key_vocabulary}}"
+          wx:key="word"
+        >
+          <view class="vocab-header">
+            <text class="vocab-word">{{item.word}} 🔊</text>
+            <text
+              class="add-btn"
+              bindtap="onAddToVocabulary"
+              data-word="{{item.word}}"
+              data-meaning="{{item.meaning}}"
+            >+ 生词本</text>
+          </view>
+          <view class="vocab-meaning">{{item.meaning}}</view>
+          <view class="vocab-example" wx:if="{{item.example}}">
+            例：{{item.example}}
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 口语技巧 -->
+    <view class="analysis-card" wx:if="{{analysis.speaking_tips}}">
+      <view class="card-title">口语技巧</view>
+      <view class="card-content">{{analysis.speaking_tips}}</view>
+    </view>
+
+    <button class="btn-close" bindtap="onClose">关闭</button>
+  </view>
+</view>

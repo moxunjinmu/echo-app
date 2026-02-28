@@ -1,0 +1,138 @@
+/* components/ai-analysis/ai-analysis.wxss */
+.ai-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.modal-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  position: relative;
+  background-color: #FFFFFF;
+  border-top-left-radius: 24rpx;
+  border-top-right-radius: 24rpx;
+  padding: 32rpx;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.modal-handle {
+  width: 80rpx;
+  height: 8rpx;
+  background-color: #DDDDDD;
+  border-radius: 4rpx;
+  margin: 0 auto 32rpx;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32rpx;
+}
+
+.ai-icon {
+  font-size: 40rpx;
+  margin-right: 16rpx;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333333;
+}
+
+.analysis-card {
+  background-color: #F8F4FF;
+  border: 1rpx solid #EBE0FF;
+  border-radius: 12rpx;
+  padding: 24rpx;
+  margin-bottom: 24rpx;
+}
+
+.card-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #8A2BE2;
+  margin-bottom: 16rpx;
+}
+
+.card-content {
+  font-size: 30rpx;
+  color: #333333;
+  line-height: 1.6;
+}
+
+.vocabulary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.vocabulary-item {
+  padding-bottom: 24rpx;
+  border-bottom: 1rpx solid #EBE0FF;
+}
+
+.vocabulary-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.vocab-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.vocab-word {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333333;
+}
+
+.add-btn {
+  font-size: 24rpx;
+  color: #8A2BE2;
+  padding: 4rpx 12rpx;
+  border: 1rpx solid #8A2BE2;
+  border-radius: 4rpx;
+}
+
+.vocab-meaning {
+  font-size: 28rpx;
+  color: #666666;
+  margin-bottom: 8rpx;
+}
+
+.vocab-example {
+  font-size: 24rpx;
+  color: #888888;
+  font-style: italic;
+}
+
+.btn-close {
+  width: 100%;
+  background-color: #00D084;
+  color: #FFFFFF;
+  border: none;
+  padding: 28rpx;
+  border-radius: 100rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-top: 32rpx;
+}
